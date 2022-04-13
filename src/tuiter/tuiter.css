@@ -1,0 +1,33 @@
+.wd-tuit-list-item-img {
+    height: 45px;
+    width: 45px;
+    border-radius: 100px;
+}
+
+.wd-tuit-list-item-text {
+    width: 90%;
+}
+
+.wd-tuit-list-item-attachment-img {
+    width: 100%;
+    height: 300px;
+}
+
+
+.wd-tuit-list-item-attachment-video {
+    border-radius: 10px;
+}
+
+.wd-whats-happening-text-area {
+    background-color: #060606;
+    border: none;
+    width: 500px;
+    height: 50px;
+    color: white;
+}
+
+.wd-whats-happening-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 100px;
+}

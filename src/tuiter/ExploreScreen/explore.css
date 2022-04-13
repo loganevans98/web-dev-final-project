@@ -1,0 +1,59 @@
+.btn {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.form-control {
+    border-radius: 20px;
+    border-left: none;
+}
+
+.input-group-text {
+    background-color: white;
+    border-right: none;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    color: darkgray;
+}
+
+.card-title {
+    color: white;
+    font-weight: bold;
+}
+
+.wd-stack-bottom {
+    font-size: 15pt;
+}
+
+.wd-stack-top {
+    margin-left: -17px;
+    font-size: 10pt;
+}
+
+.wd-tuit-text {
+    width: 80%;
+}
+
+.wd-tuit-img {
+    width: 80px;
+    height: 80px;
+}
+
+.wd-avatar-img {
+    width: 45px;
+    height: 45px;
+}
+
+.wd-follow-name {
+    width: 75%;
+}
+
+.wd-follow-button {
+    width: 25%;
+    height: 10%;
+    text-align: center;
+}
+
+.card-img-overlay {
+    top: auto;
+}
