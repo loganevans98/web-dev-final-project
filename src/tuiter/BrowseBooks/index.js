@@ -1,14 +1,14 @@
-import {React, useState, useRef} from "react";
+import {React, useState, useRef, useEffect} from "react";
 import axios from "axios";
 
 const BrowseBooks = () => {
     const [books, setBooks] = useState([]);
     const titleRef = useRef();
-    const API_URL = 'https://www.googleapis.com/books/v1/volumes?key=AIzaSyDA76fpre3275WE_zcM-qKbCm4j59RCvTs&q'; //if includes API key, maybe make it an ENV variable? if so make sure to add it to heroku?
-    const searchBooksByTitle = async (title) => {
-        //const response = await axios.get(`${API_URL}=${titleRef.current.value}`);
+    const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+    const API_URL = `https://www.googleapis.com/books/v1/volumes?key${API_KEY}&q`;
+    const searchBooksByTitle = async () => {
         const response = await axios.get(`${API_URL}=${titleRef.current.value}`);
-        setBooks(response.data.items); //search is the name of the actual array, this might be different depending on the API so maybe just start with .data and look at network tab, see what comes back and adjust accordingly
+        setBooks(response.data.items);
     }
 
     return(
