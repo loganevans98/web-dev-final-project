@@ -4,6 +4,7 @@ import HomeScreen from "./tuiter/home-screen";
 import BrowseBooks from "./tuiter/BrowseBooks";
 import {BrowserRouter, Route, Routes, Link} from "react-router-dom";
 import React from "react";
+import Signup from "./tuiter/Signup/signup";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
                             <Route path="home" exact={true} element={<HomeScreen />} />
                             <Route path="explore" element={<ExploreScreen />}/>
                             <Route path="browse-books" element={<BrowseBooks />}/>
+                            <Route path="signup" element={<Signup />}/>
                     </Route>
                 </Routes>
             </div>
