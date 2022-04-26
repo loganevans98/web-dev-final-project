@@ -14,6 +14,7 @@ const BrowseBooks = () => {
     return(
         <div>
             <h1>Search Books</h1>
+            <p>please search your favorite book here!</p>
 
             <ul className="list-group">
                 <li className="list-group-item">
