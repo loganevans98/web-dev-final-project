@@ -52,7 +52,7 @@ const NavigationSidebar = ({active = ''}) => {
             </div>
             <div className="d-grid mt-2">
                 <a href="../tuit.html"
-                   className="btn btn-primary btn-block rounded-pill">
+                   className="btn btn-primary btn-block rounded-pill w-100">
                     Tuit</a>
             </div>
         </div>
