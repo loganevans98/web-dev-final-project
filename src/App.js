@@ -4,6 +4,7 @@ import HomeScreen from "./tuiter/home-screen";
 import BrowseBooks from "./tuiter/BrowseBooks";
 import {BrowserRouter, Route, Routes, Link} from "react-router-dom";
 import React from "react";
+import BookDetails from "./tuiter/BrowseBooks/book-details";
 import Signup from "./tuiter/Signup/signup";
 import Profile from "./tuiter/Profile";
 import Collections from "./tuiter/Collections";
@@ -23,6 +24,8 @@ function App() {
                             <Route path="home" exact={true} element={<HomeScreen />} />
                             <Route path="explore" element={<ExploreScreen />}/>
                             <Route path="browse-books" element={<BrowseBooks />}/>
+                            <Route path="browse-books/:searchString" element={<BrowseBooks />}/>
+                            <Route path="browse-books/details/:bookID" element={<BookDetails />}/>
                             <Route path="signup" element={<Signup />}/>
                             <Route path="profile" element={
                                 <SecureRoute>
