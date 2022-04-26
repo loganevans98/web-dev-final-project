@@ -1,15 +1,26 @@
 import {React, useState, useRef, useEffect} from "react";
+import {Link, useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 const BrowseBooks = () => {
     const [books, setBooks] = useState([]);
+    const {searchString} = useParams();
     const titleRef = useRef();
+    const navigate = useNavigate();
     const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
     const API_URL = `https://www.googleapis.com/books/v1/volumes?key${API_KEY}&q`;
     const searchBooksByTitle = async () => {
         const response = await axios.get(`${API_URL}=${titleRef.current.value}`);
         setBooks(response.data.items);
+        navigate(`/browse-books/${titleRef.current.value}`)
     }
+
+    useEffect(() => {
+        if(searchString) {
+            titleRef.current.value = searchString
+            searchBooksByTitle()
+        }
+    }, [])
 
     return(
         <div>
@@ -24,9 +35,11 @@ const BrowseBooks = () => {
 
                     books.map(book =>
                         <li className="list-group-item">
-                            <img src={book.volumeInfo.imageLinks.thumbnail} height={100} className="me-2 float-start"/>
-                            {book.volumeInfo.title} <br/>
-                            {book.volumeInfo.authors}
+                            <Link to={`/browse-books/details/${book.id}`}>
+                                <img src={book.volumeInfo.imageLinks.thumbnail} height={100} className="me-2 float-start"/>
+                                {book.volumeInfo.title} <br/>
+                                {book.volumeInfo.authors}
+                            </Link>/
                         </li>)
                 }
             </ul>
