@@ -5,23 +5,37 @@ import BrowseBooks from "./tuiter/BrowseBooks";
 import {BrowserRouter, Route, Routes, Link} from "react-router-dom";
 import React from "react";
 import Signup from "./tuiter/Signup/signup";
+import Profile from "./tuiter/Profile";
+import Collections from "./tuiter/Collections";
+import {ProfileProvider} from "./contexts/profile-context";
+import Signin from "./tuiter/Signin";
+import SecureRoute from "./tuiter/Secure/SecureRoute";
 
 
 function App() {
     return (
-        <BrowserRouter>
-            <div className="container">
-                <Routes>
-                    <Route path="/" element={<Tuiter />}>
+        <ProfileProvider>
+            <BrowserRouter>
+                <div className="container">
+                    <Routes>
+                        <Route path="/" element={<Tuiter />}>
                             <Route index element={<HomeScreen />}/>
                             <Route path="home" exact={true} element={<HomeScreen />} />
                             <Route path="explore" element={<ExploreScreen />}/>
                             <Route path="browse-books" element={<BrowseBooks />}/>
                             <Route path="signup" element={<Signup />}/>
-                    </Route>
-                </Routes>
-            </div>
-        </BrowserRouter>
+                            <Route path="profile" element={
+                                <SecureRoute>
+                                    <Profile />
+                                </SecureRoute>
+                            }/>
+                            <Route path="collections" element={<Collections />}/>
+                            <Route path="signin" element={<Signin />}/>
+                        </Route>
+                    </Routes>
+                </div>
+            </BrowserRouter>
+        </ProfileProvider>
     );
 }
 

@@ -23,7 +23,7 @@ const Tuiter = () => {
                     <Outlet />
                 </div>
                 <div className="d-none d-lg-block col-lg-4 col-xl-4">
-                    <WhoToFollowList />
+                    {/*<WhoToFollowList />*/}
                 </div>
             </div>
         </Provider>
