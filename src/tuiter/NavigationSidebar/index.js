@@ -1,7 +1,7 @@
 import React from "react";
 import {BrowserRouter, Route, Routes, Link} from "react-router-dom";
 
-const NavigationSidebar = ({active = 'explore'}) => {
+const NavigationSidebar = ({active = ''}) => {
     return(
         <div>
             <div className="list-group">
@@ -16,8 +16,11 @@ const NavigationSidebar = ({active = 'explore'}) => {
                     <i className="fas fa-hashtag"></i> <span
                     className="d-xl-inline d-lg-none d-md-none d-sm-none">Explore</span>
                 </Link>
-                <Link to="./browse-books" class="list-group-item list-group-item-action active" aria-current="true">
+                <Link to="./browse-books" class="list-group-item list-group-item-action" aria-current="true">
                     <i class="fas fa-book"></i> <span class="d-xl-inline d-lg-none d-md-none d-sm-none">Books</span>
+                </Link>
+                <Link to="./signup" class="list-group-item list-group-item-action " aria-current="true">
+                    <i class="fas fa-user"></i> <span class="d-xl-inline d-lg-none d-md-none d-sm-none">Signup</span>
                 </Link>
                 <a href="#" className={`list-group-item list-group-item-action ${active === 'notifications' ? 'active' : ''}`}>
                     <i className="fas fa-bell"></i> <span
