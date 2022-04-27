@@ -5,7 +5,7 @@ const HomeScreen = () => {
     return(
         <div>
             <WhatsHappening />
-            <TuitList />
+            {/*<TuitList />*/}
         </div>
     )
 }
