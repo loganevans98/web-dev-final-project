@@ -1,7 +1,9 @@
 import {React, useState, useEffect, useRef} from 'react';
+import {useProfile} from "../../contexts/profile-context";
 import {useParams} from "react-router-dom";
 import SecureContent from "../Secure/SecureContent";
 import * as bookService from "../../services/books-service";
+import * as saveService from "../../services/lists-service";
 import "../tuiter.css";
 
 const BookDetails = () => {
@@ -15,6 +17,7 @@ const BookDetails = () => {
 	const [saved, setSaved] = useState(false)
 	const {bookID} = useParams();
 	const commentRef = useRef();
+
     const fetchBookById = async() => {
         const response = await bookService.fetchBookById(bookID);
 		setBookDetails(response.volumeInfo);
@@ -72,6 +75,12 @@ const BookDetails = () => {
 		}
 	}
 
+	const {profile} = useProfile()
+
+	const handleSaveButton = async() => {
+		const response = await saveService.userSaveBook(profile._id, bookDetails.bookID)
+	}
+
 	useEffect(() => {
 		fetchBookById();
 	})
@@ -94,6 +103,8 @@ const BookDetails = () => {
 					</p>
 					<SecureContent>
 						<button className={`btn ${saved ? `btn-primary` : `btn-outline-primary`}`} onClick={handleSave}>{saved ? "Save" : "Saved"}</button>
+						<button className="btn btn-outline-primary" onClick={handleSaveButton}>save</button>
+
 					</SecureContent>
 				</div>
 			</div>
