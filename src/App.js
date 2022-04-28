@@ -33,9 +33,17 @@ function App() {
                                     <Profile />
                                 </SecureRoute>
                             }/>
-                            <Route path="collections" element={<Collections />}/>
+                            <Route path="collections" element={
+                                <SecureRoute>
+                                    <Collections />
+                                </SecureRoute>
+                            }/>
                             <Route path="signin" element={<Signin />}/>
-                            <Route path="marketplace" element={<Marketplace />}/>
+                            <Route path="marketplace" element={
+                                <SecureRoute>
+                                    <Marketplace />
+                                </SecureRoute>
+                            }/>
                         </Route>
                     </Routes>
                 </div>

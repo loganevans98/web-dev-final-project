@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useProfile} from "../../contexts/profile-context";
+import {useNavigate} from "react-router-dom";
 
 const SecureRoute = ({children}) => {
     const {checkLoggedIn} = useProfile();
     const [currentUser, setCurrentUser] = useState();
     const [waiting, setWaiting] = useState(true);
+    const navigate = useNavigate();
     const check = async () => {
         try {
             const user = await checkLoggedIn();
@@ -21,11 +23,7 @@ const SecureRoute = ({children}) => {
     } else if(waiting) {
         return null;
     } else {
-        return(
-        <div>
-            Please sign in
-        </div>
-        );
+        navigate('/signup');
     }
 
 }

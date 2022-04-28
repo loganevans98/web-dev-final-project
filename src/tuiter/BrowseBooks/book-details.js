@@ -92,7 +92,9 @@ const BookDetails = () => {
 						<br />
 						<a href={bookDetails.previewLink}>Preview this Book</a>
 					</p>
-					<button className={`btn ${saved ? `btn-primary` : `btn-outline-primary`}`} onClick={handleSave}>{saved ? "Save" : "Saved"}</button>
+					<SecureContent>
+						<button className={`btn ${saved ? `btn-primary` : `btn-outline-primary`}`} onClick={handleSave}>{saved ? "Save" : "Saved"}</button>
+					</SecureContent>
 				</div>
 			</div>
 			<SecureContent>
