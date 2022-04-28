@@ -17,6 +17,10 @@ const NavigationSidebar = ({active = ''}) => {
                     <i className="fas fa-list-ul"></i> <span
                     className="d-xl-inline d-lg-none d-md-none d-sm-none">Collections</span>
                 </Link>
+                <Link to="./marketplace" class="list-group-item list-group-item-action" aria-current="true">
+                    <i className="fas fa-store"></i> <span
+                    className="d-xl-inline d-lg-none d-md-none d-sm-none">Marketplace</span>
+                </Link>
                 <Link to="./signup" class="list-group-item list-group-item-action " aria-current="true">
                     <i className="fas fa-user-plus"></i> <span class="d-xl-inline d-lg-none d-md-none d-sm-none">Signup</span>
                 </Link>
