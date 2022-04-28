@@ -1,7 +1,7 @@
 import {useState} from "react";
 import * as authService from "../../services/auth-service";
 // import * as userService from "../../services/users-service";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useProfile} from "../../contexts/profile-context";
 
 const Signup = () => {
@@ -21,6 +21,7 @@ const Signup = () => {
     return (
         <div>
             <h1>Signup</h1>
+            <h4>Already have an account? <Link to='/signin'>Sign in</Link></h4>
             <input className="mb-2 form-control"
                    onChange={(e) =>
                        setNewUser({...newUser, email: e.target.value})}
