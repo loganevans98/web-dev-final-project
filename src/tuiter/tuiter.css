@@ -32,6 +32,16 @@
     border-radius: 100px;
 }
 
+
 .btn {
     width: 15%;
+}
+
+.wd-link {
+    color: black;
+    text-decoration: none;
+}
+
+.wd-link:hover {
+    text-decoration: underline;
 }

@@ -11,6 +11,7 @@ import Collections from "./tuiter/Collections";
 import {ProfileProvider} from "./contexts/profile-context";
 import Signin from "./tuiter/Signin";
 import SecureRoute from "./tuiter/Secure/SecureRoute";
+import Marketplace from "./tuiter/Marketplace";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
                             }/>
                             <Route path="collections" element={<Collections />}/>
                             <Route path="signin" element={<Signin />}/>
+                            <Route path="marketplace" element={<Marketplace />}/>
                         </Route>
                     </Routes>
                 </div>
