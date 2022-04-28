@@ -1,22 +1,15 @@
 import React, {useEffect} from "react";
-import {useDispatch, useSelector}
-    from "react-redux";
-<<<<<<< HEAD
+import {useDispatch, useSelector} from "react-redux";
 import {FIND_ALL_TUITS, findAllTuits} from "../../actions/tuits-actions";
-
-import TuitListItem
-    from "./tuit-list-item";
-import * as service from "../../services/tuits-service";
-=======
 import * as service from '../../services/tuits-service';
 import TuitListItem from "./tuit-list-item";
->>>>>>> origin/master
+
 
 const TuitList = () => {
     const tuits = useSelector(
         state => state.tuits);
     const dispatch = useDispatch();
-<<<<<<< HEAD
+
     useEffect(async () => {
         let tuitsFromService = await service.findAllTuits();
         dispatch({
@@ -25,7 +18,7 @@ const TuitList = () => {
         });
 
     },[]);
-=======
+
     useEffect(() => {
         async function findAllTuits(dispatch) {
             const tuits = await service.findAllTuits();
@@ -37,7 +30,7 @@ const TuitList = () => {
 
         findAllTuits(dispatch)
     }, []);
->>>>>>> origin/master
+
 
 
     return (
