@@ -4,9 +4,13 @@ import {useParams} from "react-router-dom";
 import SecureContent from "../Secure/SecureContent";
 import * as bookService from "../../services/books-service";
 import * as saveService from "../../services/lists-service";
+
 import "../tuiter.css";
+import {useProfile} from "../../contexts/profile-context";
+
 
 const BookDetails = () => {
+	const {profile} = useProfile();
 	const [comments, setComments] = useState([]);
 	const [likes, setLikes] = useState(0);
 	const [liked, setLiked] = useState(false);
@@ -19,50 +23,59 @@ const BookDetails = () => {
 	const commentRef = useRef();
 
     const fetchBookById = async() => {
-        const response = await bookService.fetchBookById(bookID);
+        const response = await booksService.fetchBookByIdFromGoogle(bookID);
 		setBookDetails(response.volumeInfo);
 		setImageLink(bookDetails.imageLinks.smallThumbnail);
 	}
 
+	const fetchComments = async () => {
+		const allComments = await booksService.findCommentsByBookID(bookID);
+		setComments(allComments);
+	}
+
+	const fetchLikes = async () => {
+		const book = await booksService.fetchBookByIdFromOurApi(bookID);
+		setLikes(book.likes);
+	}
+
+	const fetchDislikes = async () => {
+		const book = await booksService.fetchBookByIdFromOurApi(bookID);
+		setDislikes(book.dislikes);
+	}
+
 	const handleComment = async () => {
-		// const actualComment = await postComment(profile._id, movieDetails.imdbId, {
-		// 	comment: commentRef.current.value,
-		// 	commenter: profile._id,
-		// 	commentEmail: profile.email
-		// })
-		setComments([...comments, commentRef.current.value]);
+		const actualComment = await booksService.postComment(profile._id, bookID, {
+			comment: commentRef.current.value,
+			commenter: profile._id,
+			commenterEmail: profile.email,
+			bookTitle: bookDetails.title,
+			bookLink: `/browse-books/details/${bookID}`
+		})
+		setComments([...comments, actualComment]);
 	}
 
 	const handleLike = async () => {
-		// const actualComment = await postComment(profile._id, movieDetails.imdbId, {
-		// 	comment: commentRef.current.value,
-		// 	commenter: profile._id,
-		// 	commentEmail: profile.email
-		// })
-		let currentLikes = likes;
-		if(liked) {
-			setLikes(likes-1);
-			setLiked(false)
-		} else if(!liked) {
-			setLikes(likes+1);
+			const book = await likesService.likeBook({
+				title: bookDetails.title,
+				bookID: bookID,
+				authors: bookDetails.authors,
+				pageCount: bookDetails.pageCount,
+				bookLink: `/browse-books/details/${bookID}`
+			});
+			setLikes(book.likes);
 			setLiked(true)
-		}
 	}
 
 	const handleDislike = async () => {
-		// const actualComment = await postComment(profile._id, movieDetails.imdbId, {
-		// 	comment: commentRef.current.value,
-		// 	commenter: profile._id,
-		// 	commentEmail: profile.email
-		// })
-		let currentDislikes = dislikes;
-		if(disliked) {
-			setDislikes(dislikes-1);
-			setDisliked(false)
-		} else if(!disliked) {
-			setDislikes(dislikes+1);
-			setDisliked(true)
-		}
+		const book = await likesService.dislikeBook({
+			title: bookDetails.title,
+			bookID: bookID,
+			authors: bookDetails.authors,
+			pageCount: bookDetails.pageCount,
+			bookLink: `/browse-books/details/${bookID}`
+		});
+		setDislikes(book.dislikes);
+		setDisliked(true);
 	}
 
 	const handleSave = async() => {
@@ -86,12 +99,10 @@ const BookDetails = () => {
 		fetchBookById();
 	},[]);
 
-
-
 	return(
 		<div className="d-flex flex-column">
 			<div className="d-flex flex-row">
-				<img src={imageLink}/>
+				{/*<img src={imageLink}/>*/}
 				<div className="ms-5">
 					<h1>{bookDetails.title}</h1>
 					<h4>{bookDetails.subtitle}</h4>
@@ -109,9 +120,9 @@ const BookDetails = () => {
 				</div>
 			</div>
 			<SecureContent>
-				<div className="d-flex flex-column mt-2">
-					<span><button className={`btn ${liked ? `btn-primary` : `btn-outline-primary`}`} onClick={handleLike}><i className="fas fa-thumbs-up"></i></button>{likes} Likes</span>
-					<span><button className={`btn ${disliked ? `btn-primary` : `btn-outline-primary`}`} onClick={handleDislike}><i className="fas fa-thumbs-down"></i></button>{dislikes} Dislikes</span>
+				<div className="d-flex flex-row mt-2">
+					<span><button className={`btn ${liked ? `btn-outline-primary`: `btn-primary`}`} onClick={handleLike}><i className="fas fa-thumbs-up"></i></button>{likes} Likes</span>
+					<span><button className={`btn  ${disliked ? `btn-outline-primary` : `btn-primary`}`} onClick={handleDislike}><i className="fas fa-thumbs-down"></i></button>{dislikes} Dislikes</span>
 				</div>
 				<h2>Leave a comment</h2>
 				<textarea ref={commentRef}></textarea>
@@ -119,7 +130,10 @@ const BookDetails = () => {
 				<h2>Comments</h2>
 				<ul className="list-group">
 					{
-						comments.map(comment => <li>{comment}</li>)
+						comments.map(comment => <li className="list-group-item">
+							<b>{comment && comment.commenterEmail}</b> <br/>
+							{comment && comment.comment}
+						</li>)
 					}
 				</ul>
 			</SecureContent>
