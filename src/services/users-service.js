@@ -18,9 +18,11 @@ export const deleteUser = (uid) =>
     axios.delete(`${USERS_API}/${uid}`)
         .then(response => response.data);
 
-export const updateUser = (uid) =>
-    axios.put(`${USERS_API}/${uid}`)
+export const updateUser = (user) => {
+    axios.put(`${USERS_API}/${user._id}`, user)
         .then(response => response.data);
+}
+
 
 export const findUserByEmail = (uEmail) =>
     axios.get(`${USERS_API}/email/${uEmail}`)

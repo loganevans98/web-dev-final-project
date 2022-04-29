@@ -12,6 +12,8 @@ import {ProfileProvider} from "./contexts/profile-context";
 import Signin from "./tuiter/Signin";
 import SecureRoute from "./tuiter/Secure/SecureRoute";
 import Marketplace from "./tuiter/Marketplace";
+import UserProfile from "./tuiter/Profile/UserProfile";
+import EditProfile from "./tuiter/Profile/EditProfile";
 
 
 function App() {
@@ -33,6 +35,13 @@ function App() {
                                     <Profile />
                                 </SecureRoute>
                             }/>
+
+                            <Route path="profile/edit" element={
+                                <SecureRoute>
+                                    <EditProfile />
+                                </SecureRoute>
+                            }/>
+                            <Route path="profile/:profileID" element={<UserProfile />}/>
                             <Route path="collections" element={
                                 <SecureRoute>
                                     <Collections />

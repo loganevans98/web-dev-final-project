@@ -24,6 +24,14 @@ const Signup = () => {
             <h4>Already have an account? <Link to='/signin'>Sign in</Link></h4>
             <input className="mb-2 form-control"
                    onChange={(e) =>
+                       setNewUser({...newUser, firstName: e.target.value})}
+                   placeholder="first name"/>
+            <input className="mb-2 form-control"
+                   onChange={(e) =>
+                       setNewUser({...newUser, lastName: e.target.value})}
+                   placeholder="last name"/>
+            <input className="mb-2 form-control"
+                   onChange={(e) =>
                        setNewUser({...newUser, email: e.target.value})}
                    placeholder="email"/>
             <input className="mb-2 form-control"

@@ -1,12 +1,11 @@
 import {React, useState, useEffect, useRef} from 'react';
 import {useProfile} from "../../contexts/profile-context";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import SecureContent from "../Secure/SecureContent";
-import * as bookService from "../../services/books-service";
+import * as booksService from "../../services/books-service";
+import * as likesService from "../../services/likes-service";
 import * as saveService from "../../services/lists-service";
-
 import "../tuiter.css";
-import {useProfile} from "../../contexts/profile-context";
 
 
 const BookDetails = () => {
@@ -88,8 +87,6 @@ const BookDetails = () => {
 		}
 	}
 
-	const {profile} = useProfile()
-
 	const handleSaveButton = async() => {
 		const response = await saveService.userTogglesSave(profile._id, bookID)
 		console.log(response)
@@ -131,7 +128,9 @@ const BookDetails = () => {
 				<ul className="list-group">
 					{
 						comments.map(comment => <li className="list-group-item">
-							<b>{comment && comment.commenterEmail}</b> <br/>
+								<Link to={`/profile/${comment.commenter}`}>
+									<b> {comment && comment.commenterEmail}</b> <br/>
+								</Link>
 							{comment && comment.comment}
 						</li>)
 					}
