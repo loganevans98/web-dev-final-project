@@ -1,5 +1,5 @@
 import {React, useState, useEffect, useRef} from 'react';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import SecureContent from "../Secure/SecureContent";
 import * as booksService from "../../services/books-service";
 import * as likesService from "../../services/likes-service";
@@ -126,7 +126,9 @@ const BookDetails = () => {
 				<ul className="list-group">
 					{
 						comments.map(comment => <li className="list-group-item">
-							<b>{comment && comment.commenterEmail}</b> <br/>
+								<Link to={`/profile/${comment.commenter}`}>
+									<b> {comment && comment.commenterEmail}</b> <br/>
+								</Link>
 							{comment && comment.comment}
 						</li>)
 					}
