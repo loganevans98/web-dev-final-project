@@ -6,16 +6,21 @@ const api = axios.create({
 });
 
 export const userSaveBook = async (userId, bookID) => {
-    const response = await api.post(`${API_BASE}/${userId}/lists/${bookID}`)
+    const response = await api.post(`${API_BASE}/users/${userId}/lists/${bookID}`)
     return response.data
 }
 
 export const userUnsaveBook = async (userId, bookID) => {
-    const response = await api.delete(`${API_BASE}/${userId}/lists/${bookID}`)
+    const response = await api.delete(`${API_BASE}/users/${userId}/lists/${bookID}`)
     return response.data
 }
 
 export const findAllBooksSavedByUser = async (userId) => {
-    const response = await api.get(`${API_BASE}/${userId}/lists/`)
+    const response = await api.get(`${API_BASE}/users/${userId}/lists/`)
+    return response.data
+}
+
+export const userTogglesSave = async (userId, bookID) => {
+    const response = await api.put(`${API_BASE}/users/${userId}/lists/${bookID}`)
     return response.data
 }

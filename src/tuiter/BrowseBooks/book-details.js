@@ -1,8 +1,10 @@
 import {React, useState, useEffect, useRef} from 'react';
+import {useProfile} from "../../contexts/profile-context";
 import {useParams} from "react-router-dom";
 import SecureContent from "../Secure/SecureContent";
-import * as booksService from "../../services/books-service";
-import * as likesService from "../../services/likes-service";
+import * as bookService from "../../services/books-service";
+import * as saveService from "../../services/lists-service";
+
 import "../tuiter.css";
 import {useProfile} from "../../contexts/profile-context";
 
@@ -86,14 +88,16 @@ const BookDetails = () => {
 		}
 	}
 
+	const {profile} = useProfile()
+
+	const handleSaveButton = async() => {
+		const response = await saveService.userTogglesSave(profile._id, bookID)
+		console.log(response)
+	}
+
 	useEffect(() => {
 		fetchBookById();
-		fetchComments();
-		fetchLikes();
-		fetchDislikes();
-	})
-
-
+	},[]);
 
 	return(
 		<div className="d-flex flex-column">
@@ -110,7 +114,8 @@ const BookDetails = () => {
 						<a href={bookDetails.previewLink}>Preview this Book</a>
 					</p>
 					<SecureContent>
-						<button className={`btn ${saved ? `btn-primary` : `btn-outline-primary`}`} onClick={handleSave}>{saved ? "Save" : "Saved"}</button>
+						<button className="btn btn-outline-primary" onClick={handleSaveButton}>save</button>
+
 					</SecureContent>
 				</div>
 			</div>
@@ -137,3 +142,7 @@ const BookDetails = () => {
 	);
 };
 export default BookDetails;
+
+/*
+<button className={`btn ${saved ? `btn-primary` : `btn-outline-primary`}`} onClick={handleSave}>{saved ? "Save" : "Saved"}</button>
+ */
