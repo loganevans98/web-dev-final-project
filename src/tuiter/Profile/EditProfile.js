@@ -14,7 +14,7 @@ const EditProfile = () => {
     const handleSaveButton = async () => {
         try {
             await usersService.updateUser(editedUser);
-            console.log(JSON.stringify(profile))
+            navigate('/profile');
         } catch (e) {
             alert(e)
         }

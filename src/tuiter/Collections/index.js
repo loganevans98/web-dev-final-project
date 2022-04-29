@@ -20,7 +20,7 @@ const Collections = () => {
             // use variable allBooks to store all information from volumeInfo of google API's book info
             const allBooks = await Promise.all(
                 response.map(async book => {
-                    const res = await bookService.fetchBookById(book.bookID);
+                    const res = await bookService.fetchBookByIdFromGoogle(book.bookID);
                     return {...book, volumeInfo: res.volumeInfo};
                 }));
             setlists(allBooks);

@@ -93,6 +93,9 @@ const BookDetails = () => {
 	}
 
 	useEffect(() => {
+		fetchComments();
+		fetchLikes();
+		fetchDislikes();
 		fetchBookById();
 	},[]);
 
