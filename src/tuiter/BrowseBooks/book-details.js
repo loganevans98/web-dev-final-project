@@ -78,12 +78,13 @@ const BookDetails = () => {
 	const {profile} = useProfile()
 
 	const handleSaveButton = async() => {
-		const response = await saveService.userSaveBook(profile._id, bookDetails.bookID)
+		const response = await saveService.userTogglesSave(profile._id, bookID)
+		console.log(response)
 	}
 
 	useEffect(() => {
 		fetchBookById();
-	})
+	},[]);
 
 
 
@@ -102,7 +103,6 @@ const BookDetails = () => {
 						<a href={bookDetails.previewLink}>Preview this Book</a>
 					</p>
 					<SecureContent>
-						<button className={`btn ${saved ? `btn-primary` : `btn-outline-primary`}`} onClick={handleSave}>{saved ? "Save" : "Saved"}</button>
 						<button className="btn btn-outline-primary" onClick={handleSaveButton}>save</button>
 
 					</SecureContent>
@@ -128,3 +128,7 @@ const BookDetails = () => {
 	);
 };
 export default BookDetails;
+
+/*
+<button className={`btn ${saved ? `btn-primary` : `btn-outline-primary`}`} onClick={handleSave}>{saved ? "Save" : "Saved"}</button>
+ */
