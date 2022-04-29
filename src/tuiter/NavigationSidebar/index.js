@@ -1,42 +1,59 @@
 import React from "react";
-import {BrowserRouter, Route, Routes, Link} from "react-router-dom";
+import {BrowserRouter, Route, Routes, Link, useNavigate, NavLink} from "react-router-dom";
 import SecureContent from "../Secure/SecureContent";
+import {useProfile} from "../../contexts/profile-context";
 
 const NavigationSidebar = ({active = ''}) => {
+    const navigate = useNavigate();
+    const {signout} = useProfile();
+
+    const handleSignOutButton = async () => {
+        try {
+            signout()
+            navigate('/')
+            //forces a refresh so that the book collection section goes away
+            window.location.reload(true);
+        } catch (e) {
+            alert(e)
+        }
+    }
+
+
     return(
         <div>
             <div className="list-group">
-                <Link to="/" className={`list-group-item list-group-item-action ${active === 'home' ? 'active' : ''}`}>
+                <NavLink to="/" className="list-group-item list-group-item-action" activeClassName={"btn-primary"}>
                     <i className="fas fa-home"></i> <span
                     className="d-xl-inline d-lg-none d-md-none d-sm-none">Home</span>
-                </Link>
-                <Link to="./browse-books" class="list-group-item list-group-item-action" aria-current="true">
-                    <i className="fas fa-book"></i> <span class="d-xl-inline d-lg-none d-md-none d-sm-none">Books</span>
-                </Link>
-                <Link to="./collections" class="list-group-item list-group-item-action" aria-current="true">
+                </NavLink>
+                <NavLink to="/browse-books" className="list-group-item list-group-item-action" activeClassName={"btn-primary"}>
+                    <i className="fas fa-book"></i> <span
+                    className="d-xl-inline d-lg-none d-md-none d-sm-none">Books</span>
+                </NavLink>
+                <NavLink to="/collections" className="list-group-item list-group-item-action" activeClassName={"btn-primary"}>
                     <i className="fas fa-list-ul"></i> <span
                     className="d-xl-inline d-lg-none d-md-none d-sm-none">Collections</span>
-                </Link>
-                <Link to="./marketplace" class="list-group-item list-group-item-action" aria-current="true">
+                </NavLink>
+                <NavLink to="/marketplace" className="list-group-item list-group-item-action" activeClassName={"btn-primary"}>
                     <i className="fas fa-store"></i> <span
                     className="d-xl-inline d-lg-none d-md-none d-sm-none">Marketplace</span>
-                </Link>
-                <Link to="./signup" class="list-group-item list-group-item-action " aria-current="true">
-                    <i className="fas fa-user-plus"></i> <span class="d-xl-inline d-lg-none d-md-none d-sm-none">Signup</span>
-                </Link>
-                <Link to="./signin" class="list-group-item list-group-item-action" aria-current="true">
+                </NavLink>
+                <NavLink to="/signup" className="list-group-item list-group-item-action" activeClassName={"btn-primary"}>
+                    <i className="fas fa-user-plus"></i> <span
+                    className="d-xl-inline d-lg-none d-md-none d-sm-none">Signup</span>
+                </NavLink>
+                <NavLink to="/signin" className="list-group-item list-group-item-action" activeClassName={"btn-primary"}>
                     <i className="fas fa-arrow-circle-right"></i> <span
                     className="d-xl-inline d-lg-none d-md-none d-sm-none">Sign In</span>
-                </Link>
-                <Link to="./profile" class="list-group-item list-group-item-action" aria-current="true">
+                </NavLink>
+                <NavLink to="/profile" className="list-group-item list-group-item-action" activeClassName={"btn-primary"}>
                     <i className="fas fa-user"></i> <span
                     className="d-xl-inline d-lg-none d-md-none d-sm-none">Profile</span>
-                </Link>
-            </div>
-            <div className="d-grid mt-2">
-                <a href="../tuit.html"
-                   className="btn btn-primary btn-block rounded-pill w-100">
-                    Tuit</a>
+                </NavLink>
+                <button class="list-group-item list-group-item-action" aria-current="true" onClick={handleSignOutButton}>
+                    <i className="fas fa-arrow-circle-left"></i> <span
+                    className="d-xl-inline d-lg-none d-md-none d-sm-none">Sign Out</span>
+                </button>
             </div>
         </div>
     );

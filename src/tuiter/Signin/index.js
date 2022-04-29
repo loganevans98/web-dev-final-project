@@ -10,7 +10,9 @@ const Signin = () => {
     const handleSigninButton = async () => {
         try {
             signin(credentials)
-            navigate('/browse-books')
+            navigate('/profile')
+            //forces a refresh so that the welcome updates
+            window.location.reload(true);
         } catch (e) {
             alert(e)
         }
