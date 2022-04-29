@@ -53,3 +53,9 @@ export const findCommentsByUserId = async (userId) => {
     const response = await api.get(`${API_BASE}/users/${userId}/comments`);
     return response.data;
 }
+
+export const findAllMostRecentComments = async () => {
+    const response = await api.get(`${API_BASE}/comments/recent`);
+    return response.data;
+}
+

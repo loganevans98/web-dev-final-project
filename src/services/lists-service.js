@@ -20,6 +20,11 @@ export const findAllBooksSavedByUser = async (userId) => {
     return response.data
 }
 
+export const findMostRecentSavesByUser = async (userId) => {
+    const response = await api.get(`${API_BASE}/users/${userId}/lists/recent`)
+    return response.data
+}
+
 export const userTogglesSave = async (userId, bookID) => {
     const response = await api.put(`${API_BASE}/users/${userId}/lists/${bookID}`)
     return response.data
