@@ -8,7 +8,7 @@ const BrowseBooks = () => {
     const titleRef = useRef();
     const navigate = useNavigate();
     const searchBooksByTitle = async () => {
-        const response = await booksService.searchBooksByTitle(titleRef.current.value);
+        const response = await booksService.fetchBooksByTitleFromGoogle(titleRef.current.value);
         setBooks(response.items);
         navigate(`/browse-books/${titleRef.current.value}`)
     }
