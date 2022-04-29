@@ -1,12 +1,17 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {useProfile} from "../../contexts/profile-context";
-import * as booksService from '../../services/books-service';
-import {Link} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Link, useParams} from "react-router-dom";
+import * as booksService from "../../services/books-service";
+import * as usersService from "../../services/users-service";
 
-
-const Profile = () => {
-    const {profile} = useProfile();
+const UserProfile = () => {
+    const [profile, setProfile] = useState();
     const [comments, setComments] = useState([]);
+    const {profileID} = useParams();
+
+    const fetchProfile = async() => {
+        const actualProfile = await usersService.findUserById(profileID);
+        setProfile(actualProfile)
+    }
 
     const fetchComments = async() => {
         const actualComments = await booksService.findCommentsByUserId(profile._id);
@@ -14,17 +19,14 @@ const Profile = () => {
     }
 
     useEffect( () => {
+        fetchProfile();
         fetchComments();
     }, [])
 
     return(
         <div>
-            <span className="d-flex align-items-center"><h1>Profile</h1> <Link to="/profile/edit"><i className="fas fa-pencil-alt ps-2"></i></Link></span>
-            <div>
-                Name: <b>{profile.firstName && profile.firstName} {profile.lastName && profile.lastName}</b>
-                <br />
-            </div>
-            <div>Email: <b>{profile.email && profile.email}</b></div>
+            <h1>Profile</h1>
+            Name: <b>{profile.firstName} {profile.lastName}</b> <br />
 
             <h2>Comments</h2>
             <ul className="list-group">
@@ -35,16 +37,15 @@ const Profile = () => {
                                 <b>Comment on:</b> <i>{comment.bookTitle}</i> <br/>
                                 {comment.comment}
                             </div>
-                           <div>
-                               <i className="fas fa-arrow-right"></i>
-                           </div>
+                            <div>
+                                <i className="fas fa-arrow-right"></i>
+                            </div>
                         </li>
                     </Link>
-                    )}
+                )}
             </ul>
         </div>
     );
-}
+};
 
-
-export default Profile;
+export default UserProfile;

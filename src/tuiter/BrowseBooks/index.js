@@ -35,7 +35,6 @@ const BrowseBooks = () => {
                     books.map(book =>
                         <li className="list-group-item">
                             <Link to={`/browse-books/details/${book.id}`} className="wd-link">
-                                <img src={book.volumeInfo.imageLinks.thumbnail} height={100} className="me-2 float-start"/>
                                 <b>{book.volumeInfo.title}</b>
                                 <br/>
                                 {book.volumeInfo.authors.map(author => <div>{author} <br/></div> )}
