@@ -26,7 +26,7 @@ const UserProfile = () => {
     return(
         <div>
             <h1>Profile</h1>
-            Name: <b>{profile.firstName} {profile.lastName}</b> <br />
+            Name: <b>{profile && profile.firstName} {profile && profile.lastName}</b> <br />
 
             <h2>Comments</h2>
             <ul className="list-group">

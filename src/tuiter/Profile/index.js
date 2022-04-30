@@ -25,7 +25,7 @@ const Profile = () => {
                 <br />
             </div>
             <div>Email: <b>{profile.email && profile.email}</b></div>
-
+            <hr />
             <h2>Comments</h2>
             <ul className="list-group">
                 {comments.map((comment) =>
