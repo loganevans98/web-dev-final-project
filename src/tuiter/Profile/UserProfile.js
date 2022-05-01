@@ -1,20 +1,27 @@
 import React, {useEffect, useState} from 'react';
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import * as booksService from "../../services/books-service";
 import * as usersService from "../../services/users-service";
+import {useProfile} from "../../contexts/profile-context";
 
 const UserProfile = () => {
-    const [profile, setProfile] = useState();
+    const {profile} = useProfile();
+    const [userProfile, setUserProfile] = useState();
     const [comments, setComments] = useState([]);
     const {profileID} = useParams();
 
+
     const fetchProfile = async() => {
-        const actualProfile = await usersService.findUserById(profileID);
-        setProfile(actualProfile)
+        try {
+            const actualProfile = await usersService.findUserById(profileID);
+            setUserProfile(actualProfile)
+        } catch(e) {
+            alert(e);
+        }
     }
 
     const fetchComments = async() => {
-        const actualComments = await booksService.findCommentsByUserId(profile._id);
+        const actualComments = await booksService.findCommentsByUserId(profileID);
         setComments(actualComments);
     }
 
@@ -26,7 +33,7 @@ const UserProfile = () => {
     return(
         <div>
             <h1>Profile</h1>
-            Name: <b>{profile && profile.firstName} {profile && profile.lastName}</b> <br />
+            Name: <b>{userProfile && userProfile.firstName} {userProfile && userProfile.lastName}</b> <br />
 
             <h2>Comments</h2>
             <ul className="list-group">

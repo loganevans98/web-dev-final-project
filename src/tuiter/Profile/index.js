@@ -1,19 +1,48 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {useProfile} from "../../contexts/profile-context";
 import * as booksService from '../../services/books-service';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import * as usersService from "../../services/users-service";
+import {updateUser} from "../../services/users-service";
 
 
 const Profile = () => {
     const {profile} = useProfile();
+    const [user, setUser] = useState();
+    const [users, setUsers] = useState([]);
     const [comments, setComments] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const navigate = useNavigate();
+
+    const checkIfAdmin = () => {
+        setIsAdmin(profile.userType === 'ADMIN') ;
+    }
+
+    const fetchUsers = async () => {
+        const actualUsers = await usersService.findAllUsers();
+        setUsers(actualUsers);
+    }
 
     const fetchComments = async() => {
         const actualComments = await booksService.findCommentsByUserId(profile._id);
         setComments(actualComments);
     }
 
+    const fetchUser = async() => {
+        setUser(...profile);
+    }
+
+    const handleDeleteUser = async(profileID) => {
+        await usersService.deleteUser(profileID);
+        const updatedUsers = await usersService.findAllUsers();
+        setUsers(updatedUsers);
+
+    }
+
     useEffect( () => {
+        fetchUser();
+        checkIfAdmin();
+        fetchUsers();
         fetchComments();
     }, [])
 
@@ -25,7 +54,35 @@ const Profile = () => {
                 <br />
             </div>
             <div>Email: <b>{profile.email && profile.email}</b></div>
+            <span className="badge bg-primary">{profile.userType}</span>
             <hr />
+            {
+                    isAdmin
+                    ?
+                   <div>
+                       <h2>Users</h2>
+                       <ul className="list-group">
+                           {
+                               users.map((user) =>
+                                   <li className="list-group-item d-flex justify-content-between">
+                                       <div>
+                                           Name: <b>{user.firstName} {user.lastName}</b><br/>
+                                           Email: <b>{user.email}</b><br/>
+                                           <span className="badge bg-primary">{profile.userType}</span><br/>
+                                       </div>
+                                       <div>
+                                           <button className="btn btn-danger" onClick={() => handleDeleteUser(user._id)}>delete</button>
+                                       </div>
+                                   </li>
+                               )
+                           }
+
+                       </ul>
+                       <hr />
+                   </div>
+                    :
+                    <div></div>
+            }
             <h2>Comments</h2>
             <ul className="list-group">
                 {comments.map((comment) =>

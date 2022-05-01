@@ -36,6 +36,11 @@ export const postComment = async (userId, bookID, comment) => {
     return response.data;
 }
 
+export const deleteCommentById = async (commentID) => {
+    const response = await api.delete(`${API_BASE}/comments/${commentID}`);
+    return response.data;
+}
+
 // In comments-controller:
 //
 // app.get('/api/books/:bookID/comments', findCommentsByBookID)

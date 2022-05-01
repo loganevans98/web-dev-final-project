@@ -34,10 +34,6 @@ const NavigationSidebar = ({active = ''}) => {
                     <i className="fas fa-list-ul"></i> <span
                     className="d-xl-inline d-lg-none d-md-none d-sm-none">Collections</span>
                 </NavLink>
-                <NavLink to="/marketplace" className="list-group-item list-group-item-action" activeClassName={"btn-primary"}>
-                    <i className="fas fa-store"></i> <span
-                    className="d-xl-inline d-lg-none d-md-none d-sm-none">Marketplace</span>
-                </NavLink>
                 <NavLink to="/signup" className="list-group-item list-group-item-action" activeClassName={"btn-primary"}>
                     <i className="fas fa-user-plus"></i> <span
                     className="d-xl-inline d-lg-none d-md-none d-sm-none">Signup</span>

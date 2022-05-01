@@ -38,8 +38,17 @@ const Signup = () => {
                    onChange={(e) =>
                        setNewUser({...newUser, password: e.target.value})}
                    placeholder="password" type="password"/>
+
+            <label>I am a:</label>
+            <select name="user-type" id="user-types" className="ms-3" onChange={(e) =>
+                setNewUser({...newUser, userType: e.target.value})}>
+                <option value="placeholder">Please select a user type</option>
+                <option value="REGULAR">Regular User</option>
+                <option value="ADMIN">Admin</option>
+                <option value="MODERATOR">Moderator</option>
+            </select>
             <button onClick={handleSignUpButton}
-                    className="btn btn-primary mb-5">Signup
+                    className="btn btn-primary mb-5 mt-5">Signup
             </button>
         </div>
     );
