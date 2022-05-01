@@ -17,7 +17,6 @@ const BookDetails = () => {
 	const [disliked, setDisliked] = useState(false);
     const [bookDetails, setBookDetails] = useState({});
 	const [imageLink, setImageLink] = useState();
-	const [saved, setSaved] = useState(false)
 	const {bookID} = useParams();
 	const commentRef = useRef();
 
@@ -42,6 +41,42 @@ const BookDetails = () => {
 		setDislikes(book.dislikes);
 	}
 
+	const checkIfUserLikeBook = async () => {
+		const bookIsLiked = await likesService.checkIfUserLikeBook(profile._id, bookID);
+		if (bookIsLiked) {
+			setLiked(true)
+			alert("liked this book!")
+		} else {
+			setLiked(false)
+			alert("unliked this book!")
+		}
+	}
+
+	const checkIfUserDislikeBook = async () => {
+		const bookIsDisliked = await likesService.checkIfUserDislikeBook(profile._id, bookID);
+		if (bookIsDisliked) {
+			setDisliked(true)
+			alert("disliked this book!")
+		} else {
+			setDisliked(false)
+			alert("undisliked this book!")
+
+		}
+	}
+
+	const [saved, setSaved] = useState(false)
+
+	const checkIfUserSavedBook = async() => {
+		const bookIsSaved = await saveService.checkIfUserSavedBook(profile._id, bookID);
+		if (bookIsSaved) {
+			setSaved(true)
+			alert("this book is now saved!")
+		} else {
+			setSaved(false)
+			alert("this book is now unsaved!")
+		}
+	}
+
 	const handleComment = async () => {
 		const actualComment = await booksService.postComment(profile._id, bookID, {
 			comment: commentRef.current.value,
@@ -54,41 +89,44 @@ const BookDetails = () => {
 	}
 
 	const handleLike = async () => {
-			const book = await likesService.likeBook({
+		try {
+			const book = await likesService.userTogglesLike(profile._id, bookID, {
 				title: bookDetails.title,
 				bookID: bookID,
 				authors: bookDetails.authors,
 				pageCount: bookDetails.pageCount,
 				bookLink: `/browse-books/details/${bookID}`
-			});
+			})
 			setLikes(book.likes);
-			setLiked(true)
+			await checkIfUserLikeBook();
+			await fetchLikes();
+			await fetchDislikes();
+		} catch(e) {
+			console.log('error', e);
+		}
 	}
 
-	const handleDislike = async () => {
-		const book = await likesService.dislikeBook({
-			title: bookDetails.title,
-			bookID: bookID,
-			authors: bookDetails.authors,
-			pageCount: bookDetails.pageCount,
-			bookLink: `/browse-books/details/${bookID}`
-		});
-		setDislikes(book.dislikes);
-		setDisliked(true);
-	}
-
-	const handleSave = async() => {
-		if(saved) {
-			//work to unsave it from collection
-			setSaved(false)
-		} else if(!saved) {
-			//work to save to collection
-			setSaved(true)
+	const handleDislike = async() => {
+		try {
+			const book = await likesService.userTogglesDislike(profile._id, bookID, {
+				title: bookDetails.title,
+				bookID: bookID,
+				authors: bookDetails.authors,
+				pageCount: bookDetails.pageCount,
+				bookLink: `/browse-books/details/${bookID}`
+			})
+			setLikes(book.likes);
+			await checkIfUserDislikeBook();
+			await fetchDislikes();
+			await fetchLikes();
+		} catch(e) {
+			console.log('error', e);
 		}
 	}
 
 	const handleSaveButton = async() => {
 		const response = await saveService.userTogglesSave(profile._id, bookID)
+		await checkIfUserSavedBook()
 		console.log(response)
 	}
 
@@ -97,6 +135,9 @@ const BookDetails = () => {
 		fetchLikes();
 		fetchDislikes();
 		fetchBookById();
+		//checkIfUserSavedAtStart();
+		//checkIfUserLikeBook();
+		//checkIfUserSavedBook();
 	},[]);
 
 	return(
@@ -114,15 +155,14 @@ const BookDetails = () => {
 						<a href={bookDetails.previewLink}>Preview this Book</a>
 					</p>
 					<SecureContent>
-						<button className="btn btn-outline-primary" onClick={handleSaveButton}>save</button>
-
+						<button className="btn btn-primary" onClick={handleSaveButton}>save</button>
 					</SecureContent>
 				</div>
 			</div>
 			<SecureContent>
 				<div className="d-flex flex-row mt-2">
-					<span><button className={`btn ${liked ? `btn-outline-primary`: `btn-primary`}`} onClick={handleLike}><i className="fas fa-thumbs-up"></i></button>{likes} Likes</span>
-					<span><button className={`btn  ${disliked ? `btn-outline-primary` : `btn-primary`}`} onClick={handleDislike}><i className="fas fa-thumbs-down"></i></button>{dislikes} Dislikes</span>
+					<span><button className="btn btn-primary" onClick={handleLike}><i className="fas fa-thumbs-up"></i></button>{likes} Likes</span>
+					<span><button className="btn btn-primary" onClick={handleDislike}><i className="fas fa-thumbs-down"></i></button>{dislikes} Dislikes</span>
 				</div>
 				<h2>Leave a comment</h2>
 				<textarea ref={commentRef}></textarea>
@@ -144,7 +184,3 @@ const BookDetails = () => {
 	);
 };
 export default BookDetails;
-
-/*
-<button className={`btn ${saved ? `btn-primary` : `btn-outline-primary`}`} onClick={handleSave}>{saved ? "Save" : "Saved"}</button>
- */
