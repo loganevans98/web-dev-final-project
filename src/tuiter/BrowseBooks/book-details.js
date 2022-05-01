@@ -135,9 +135,6 @@ const BookDetails = () => {
 		fetchLikes();
 		fetchDislikes();
 		fetchBookById();
-		//checkIfUserSavedAtStart();
-		//checkIfUserLikeBook();
-		//checkIfUserSavedBook();
 	},[]);
 
 	return(
