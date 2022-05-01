@@ -129,7 +129,7 @@ const BookDetails = () => {
 						<div>
 							<button className="btn btn-primary mb-3" onClick={handleSaveButton}>save</button>
 							<span><button className="btn btn-primary" onClick={handleLike}><i className="fas fa-thumbs-up"></i></button>{likes} Likes</span>
-							<span><button className="btn-btn-primary" onClick={handleDislike}><i className="fas fa-thumbs-down"></i></button>{dislikes} Dislikes</span>
+							<span><button className="btn btn-primary" onClick={handleDislike}><i className="fas fa-thumbs-down"></i></button>{dislikes} Dislikes</span>
 						</div>
 					</SecureContent>
 			</div>
