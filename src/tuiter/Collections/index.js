@@ -28,7 +28,6 @@ const Collections = () => {
             console.log('error:', e);
         }
     }
-    console.log('allBooks:', lists);
 
     useEffect(() => {
         findlist();
