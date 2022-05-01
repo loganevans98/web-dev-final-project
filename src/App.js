@@ -11,7 +11,6 @@ import Collections from "./tuiter/Collections";
 import {ProfileProvider} from "./contexts/profile-context";
 import Signin from "./tuiter/Signin";
 import SecureRoute from "./tuiter/Secure/SecureRoute";
-import Marketplace from "./tuiter/Marketplace";
 import UserProfile from "./tuiter/Profile/UserProfile";
 import EditProfile from "./tuiter/Profile/EditProfile";
 
@@ -48,11 +47,6 @@ function App() {
                                 </SecureRoute>
                             }/>
                             <Route path="signin" element={<Signin />}/>
-                            <Route path="marketplace" element={
-                                <SecureRoute>
-                                    <Marketplace />
-                                </SecureRoute>
-                            }/>
                         </Route>
                     </Routes>
                 </div>
