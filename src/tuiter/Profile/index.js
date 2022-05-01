@@ -68,7 +68,7 @@ const Profile = () => {
                                        <div>
                                            Name: <b>{user.firstName} {user.lastName}</b><br/>
                                            Email: <b>{user.email}</b><br/>
-                                           <span className="badge bg-primary">{profile.userType}</span><br/>
+                                           <span className="badge bg-primary">{user.userType}</span><br/>
                                        </div>
                                        <div>
                                            <button className="btn btn-danger" onClick={() => handleDeleteUser(user._id)}>delete</button>
